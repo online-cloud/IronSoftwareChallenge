@@ -30,9 +30,9 @@ class DECODER
             {
                 if (c == prevButton) //checking on the character is same as previous character or not
                 {
-                    buttonCount+++;
-					ToAppend = false;
-				}
+                    buttonCount++;
+			ToAppend = false;
+		}
                 else
                 {
                     prevCount = buttonCount;
