@@ -1,0 +1,85 @@
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+class DECODER
+{
+    public static string OldPhonePad(string input)
+    {
+        Dictionary<char, string> numberToLetters = new Dictionary<char, string>()
+        {
+            {'2', "ABC"},
+                {'3', "DEF"},
+                    {'4', "GHI"},
+                        {'5', "JKL"},
+                            {'6', "MNO"},
+                                {'7', "PQRS"},
+                                    {'8', "TUV"},
+                                        {'9', "WXYZ"},
+        };
+
+        char prevButton = ' ';
+        int buttonCount = 1;
+        int prevCount = 0;
+        bool ToAppend = false;
+        StringBuilder resultBuilder = new StringBuilder();
+        // looping the each character in the input string
+        foreach (char c in input)
+        {
+            if (Char.IsDigit(c)) //checking on the character is digit or not
+            {
+                if (c == prevButton) //checking on the character is same as previous character or not
+                {
+                    buttonCount+++;
+					ToAppend = false;
+				}
+                else
+                {
+                    prevCount = buttonCount;
+                    buttonCount = 1; // Reset count for a new button press
+                    ToAppend = true;
+                }
+
+                if (buttonCount > numberToLetters[c].Length)
+                {
+                    buttonCount = 1; // Reset count if it exceeds the number of letters
+                }
+                if (ToAppend)
+                {
+                    resultBuilder.Append(numberToLetters[c][prevCount - 1]);
+                }
+
+                 
+                // Append the correct letter based on count
+                // Console.WriteLine(resultBuilder);
+                prevButton = c;
+            }
+            else if (c == '*')
+            {
+                if (resultBuilder.Length > 0)
+                {
+                    resultBuilder.Length--; // Remove last character
+                }
+            }
+            else if (c == '#')
+            {
+                break; // Exit the loop
+            }
+            else if (c == ' ')
+            {
+                prevButton = ' '; // Reset prevButton for the next word
+            }
+        }
+
+        return resultBuilder.ToString().TrimEnd();
+    }
+
+    public static void Main(string[] args)
+    {
+    Console.WriteLine(OldPhonePad("33#")); // Output: E
+    Console.WriteLine(OldPhonePad("227*#")); // Output: B
+    Console.WriteLine(OldPhonePad("4433555' '555666#")); // Output: Hello
+    Console.WriteLine(OldPhonePad("8 88777444666* 664#")); // Output: ???
+
+    }
+}
