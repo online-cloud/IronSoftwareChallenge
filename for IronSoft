@@ -46,7 +46,7 @@ class DECODER
                 }
                 if (ToAppend)
                 {
-                    resultBuilder.Append(numberToLetters[c][prevCount - 1]);
+                    resultBuilder.Append(numberToLetters[c][prevCount = 1]); // some issue here, i can type HELLO properly
                 }
 
                  
